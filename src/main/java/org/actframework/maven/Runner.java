@@ -67,14 +67,16 @@ public class Runner {
     private final File mavenBaseDir;
     private final int jpdaPort;
     private final String jvmArgs;
+    private final boolean e2e;
 
-    public Runner(String mainClass, String classpath, File mavenBaseDir, int jpdaPort, String jvmArgs) {
+    public Runner(String mainClass, String classpath, File mavenBaseDir, int jpdaPort, String jvmArgs, boolean e2e) {
         this.outputStream = System.out; //NOSONAR
         this.mainClass = mainClass;
         this.classpath = classpath;
         this.mavenBaseDir = mavenBaseDir;
         this.jpdaPort = jpdaPort;
         this.jvmArgs = jvmArgs;
+        this.e2e = e2e;
     }
 
     public OutputStream getOutput() {
@@ -138,7 +140,11 @@ public class Runner {
                 }
             }
         }
-        commandLine.add("-Dapp.mode=dev");
+        if (e2e) {
+            commandLine.add("-Dprofile=e2e");
+        } else {
+            commandLine.add("-Dapp.mode=dev");
+        }
         commandLine.add("-cp");
         commandLine.add(classpath);
         commandLine.add(mainClass);

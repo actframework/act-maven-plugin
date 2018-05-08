@@ -107,15 +107,22 @@ public class ActMojo extends AbstractMojo {
     }
 
     private void startRunner(List<String> classpathItems) {
-        Runner machine = new Runner(
+        Runner machine = createRunner(classpathItems);
+        machine.start();
+    }
+
+    protected Runner createRunner(List<String> classpathItems) {
+        return new Runner(
                 appEntry,
                 StringUtils.join(classpathItems, File.pathSeparator),
                 project.getBasedir(),
                 jpdaPort,
-                jvmArgs);
+                jvmArgs,
+                e2e());
+    }
 
-
-        machine.start();
+    protected boolean e2e() {
+        return false;
     }
 
     @SuppressWarnings("all")
