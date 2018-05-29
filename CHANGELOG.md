@@ -1,5 +1,8 @@
 # ACT Maven Plugin
 
+## 1.8.8.2 - 29/May/2018
+- When no profile specified `act:e2e` shall use `e2e` as profile
+
 ## 1.8.8.1 - 29/May/2018
 - update logic to trigger `act:e2e` based on act-e2e change #2
 - Allow passing `profile` into act runner #1

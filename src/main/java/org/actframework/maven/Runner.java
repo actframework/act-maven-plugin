@@ -138,13 +138,20 @@ public class Runner {
                 commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=%s", jpdaPort));
             }
         }
+
         if (StringUtils.isNotBlank(jvmArgs)) {
-            List<String> args = S.fastSplit(jvmArgs, " ");
+            String _jvmArgs = jvmArgs;
+            if (e2e && !_jvmArgs.contains("-Dprofile=")) {
+                _jvmArgs += " -Dprofile=e2e";
+            }
+            List<String> args = S.fastSplit(_jvmArgs, " ");
             for (String arg : args) {
                 if (S.notBlank(arg)) {
                     commandLine.add(arg);
                 }
             }
+        } else if (e2e) {
+            commandLine.add("-Dprofile=e2e");
         }
         if (e2e) {
             commandLine.add("-De2e.run=true");
