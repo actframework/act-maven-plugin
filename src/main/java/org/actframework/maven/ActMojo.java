@@ -45,6 +45,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+import org.osgl.util.S;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,6 +113,7 @@ public class ActMojo extends AbstractMojo {
     }
 
     protected Runner createRunner(List<String> classpathItems) {
+        mergeSystemProperties();
         return new Runner(
                 appEntry,
                 StringUtils.join(classpathItems, File.pathSeparator),
@@ -119,6 +121,27 @@ public class ActMojo extends AbstractMojo {
                 jpdaPort,
                 jvmArgs,
                 e2e());
+    }
+
+    private void mergeSystemProperties() {
+        _mergeSysProp("e2e.run");
+        _mergeSysProp("act.e2e.run");
+
+        _mergeSysProp("profile");
+        _mergeSysProp("act.profile");
+    }
+
+    private void _mergeSysProp(String key) {
+        if (null == jvmArgs) {
+            jvmArgs = "";
+        }
+        String s = System.getProperty(key);
+        if (S.notBlank(s)) {
+            if (key.startsWith("act.")) {
+                key = key.substring(4);
+            }
+            jvmArgs = S.concat(jvmArgs, " ", "-D", key, "=", s);
+        }
     }
 
     protected boolean e2e() {

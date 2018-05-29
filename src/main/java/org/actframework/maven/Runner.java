@@ -37,6 +37,7 @@ package org.actframework.maven;
  */
 
 import org.apache.commons.lang3.StringUtils;
+import org.osgl.$;
 import org.osgl.logging.LogManager;
 import org.osgl.logging.Logger;
 import org.osgl.util.S;
@@ -130,7 +131,12 @@ public class Runner {
         if (jpdaPort > 0) {
             LOG.info("Listening for jpda connection at " + jpdaPort);
             commandLine.add("-Xdebug");
-            commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=%s", jpdaPort));
+            String s = System.getProperty("suspend");
+            if ($.bool(s)) {
+                commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=%s", jpdaPort));
+            } else {
+                commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=%s", jpdaPort));
+            }
         }
         if (StringUtils.isNotBlank(jvmArgs)) {
             List<String> args = S.fastSplit(jvmArgs, " ");
@@ -141,9 +147,7 @@ public class Runner {
             }
         }
         if (e2e) {
-            commandLine.add("-Dprofile=e2e");
-        } else {
-            commandLine.add("-Dapp.mode=dev");
+            commandLine.add("-De2e.run=true");
         }
         commandLine.add("-cp");
         commandLine.add(classpath);
