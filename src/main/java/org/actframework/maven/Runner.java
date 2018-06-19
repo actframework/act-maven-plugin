@@ -37,6 +37,7 @@ package org.actframework.maven;
  */
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.osgl.$;
 import org.osgl.logging.LogManager;
 import org.osgl.logging.Logger;
@@ -100,7 +101,7 @@ public class Runner {
         }
     }
 
-    public void start() {
+    public void start() throws MojoExecutionException {
         synchronized (this) {
             try {
                 if (this.startedProcess != null) {
@@ -108,7 +109,11 @@ public class Runner {
                     this.startedProcess.getFuture().get();
                 }
                 this.startedProcess = startProcess();
-                this.startedProcess.getProcess().waitFor();
+                int exitCode = this.startedProcess.getProcess().waitFor();
+                System.out.println("sub process returned with exit code: " + exitCode);
+                if (exitCode != 0 && e2e) {
+                    throw new MojoExecutionException("End to end test failed");
+                }
             } catch (ExecutionException | InterruptedException | IOException e) {
                 LOG.error("Something fishy happenend. Unable to cleanly restart!", e);
                 LOG.error("You'll probably need to restart maven?");

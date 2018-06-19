@@ -107,7 +107,7 @@ public class ActMojo extends AbstractMojo {
         startRunner(classpathItems);
     }
 
-    private void startRunner(List<String> classpathItems) {
+    private void startRunner(List<String> classpathItems) throws MojoExecutionException {
         Runner machine = createRunner(classpathItems);
         machine.start();
     }

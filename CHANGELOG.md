@@ -1,5 +1,8 @@
 # ACT Maven Plugin
 
+## 1.8.8.3 - 19/Jun/2018
+- act-e2e: exit to system with exit code inherited from e2e process #3
+
 ## 1.8.8.2 - 29/May/2018
 - When no profile specified `act:e2e` shall use `e2e` as profile
 
