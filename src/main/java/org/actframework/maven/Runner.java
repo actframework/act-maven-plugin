@@ -69,16 +69,16 @@ public class Runner {
     private final File mavenBaseDir;
     private final int jpdaPort;
     private final String jvmArgs;
-    private final boolean e2e;
+    private final boolean test;
 
-    public Runner(String mainClass, String classpath, File mavenBaseDir, int jpdaPort, String jvmArgs, boolean e2e) {
+    public Runner(String mainClass, String classpath, File mavenBaseDir, int jpdaPort, String jvmArgs, boolean test) {
         this.outputStream = System.out; //NOSONAR
         this.mainClass = mainClass;
         this.classpath = classpath;
         this.mavenBaseDir = mavenBaseDir;
         this.jpdaPort = jpdaPort;
         this.jvmArgs = jvmArgs;
-        this.e2e = e2e;
+        this.test = test;
     }
 
     public OutputStream getOutput() {
@@ -111,7 +111,7 @@ public class Runner {
                 this.startedProcess = startProcess();
                 int exitCode = this.startedProcess.getProcess().waitFor();
                 System.out.println("sub process returned with exit code: " + exitCode);
-                if (exitCode != 0 && e2e) {
+                if (exitCode != 0 && test) {
                     throw new MojoExecutionException("End to end test failed");
                 }
             } catch (ExecutionException | InterruptedException | IOException e) {
@@ -146,8 +146,8 @@ public class Runner {
 
         if (StringUtils.isNotBlank(jvmArgs)) {
             String _jvmArgs = jvmArgs;
-            if (e2e && !_jvmArgs.contains("-Dprofile=")) {
-                _jvmArgs += " -Dprofile=e2e";
+            if (test && !_jvmArgs.contains("-Dprofile=")) {
+                _jvmArgs += " -Dprofile=test";
             }
             List<String> args = S.fastSplit(_jvmArgs, " ");
             for (String arg : args) {
@@ -155,11 +155,11 @@ public class Runner {
                     commandLine.add(arg);
                 }
             }
-        } else if (e2e) {
-            commandLine.add("-Dprofile=e2e");
+        } else if (test) {
+            commandLine.add("-Dprofile=test");
         }
-        if (e2e) {
-            commandLine.add("-De2e.run=true");
+        if (test) {
+            commandLine.add("-Dtest.run=true");
         }
         commandLine.add("-cp");
         commandLine.add(classpath);

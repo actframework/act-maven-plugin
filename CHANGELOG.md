@@ -1,5 +1,8 @@
 # ACT Maven Plugin
 
+## 1.8.8.8 - 30/Oct/2018
+- rename e2e to test
+
 ## 1.8.8.3 - 19/Jun/2018
 - act-e2e: exit to system with exit code inherited from e2e process #3
 

@@ -4,7 +4,7 @@
 
   <artifactId>act-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.8.8.4-SNAPSHOT</version>
+  <version>1.8.8.8-SNAPSHOT</version>
 
   <name>ACT Maven Plugin</name>
   <description>Support run actframework app using maven task</description>
@@ -18,7 +18,7 @@
   <parent>
     <groupId>org.actframework</groupId>
     <artifactId>parent</artifactId>
-    <version>1.8.8-RC8</version>
+    <version>1.8.9</version>
   </parent>
 
   <properties>

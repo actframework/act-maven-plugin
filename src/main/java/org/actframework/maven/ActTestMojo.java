@@ -20,18 +20,16 @@ package org.actframework.maven;
  * #L%
  */
 
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.plugins.annotations.*;
 
-@Mojo(name = "e2e",
+@Mojo(name = "test",
         requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
         defaultPhase = LifecyclePhase.NONE,
         threadSafe = true)
-public class ActEndToEndMojo extends ActMojo {
+public class ActTestMojo extends ActMojo {
 
     @Override
-    protected boolean e2e() {
+    protected boolean test() {
         return true;
     }
 

@@ -120,10 +120,13 @@ public class ActMojo extends AbstractMojo {
                 project.getBasedir(),
                 jpdaPort,
                 jvmArgs,
-                e2e());
+                test());
     }
 
     private void mergeSystemProperties() {
+        _mergeSysProp("test.run");
+        _mergeSysProp("act.test.run");
+        
         _mergeSysProp("e2e.run");
         _mergeSysProp("act.e2e.run");
 
@@ -144,7 +147,7 @@ public class ActMojo extends AbstractMojo {
         }
     }
 
-    protected boolean e2e() {
+    protected boolean test() {
         return false;
     }
 
