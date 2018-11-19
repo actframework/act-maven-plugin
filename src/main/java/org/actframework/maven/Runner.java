@@ -55,7 +55,7 @@ import java.util.concurrent.ExecutionException;
  * This is a refactored version of
  * RunClassInSeparateJvmMachine.java from the Ninja Web Framework
  *
- * Original source code can be found here:
+ * Original source code can to.be found here:
  * https://github.com/ninjaframework/ninja/blob/develop/ninja-maven-plugin/src/main/java/ninja/build/DelayedRestartTrigger.java
  *
  * @author svenkubiak

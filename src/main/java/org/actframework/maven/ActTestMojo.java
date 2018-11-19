@@ -24,7 +24,7 @@ import org.apache.maven.plugins.annotations.*;
 
 @Mojo(name = "test",
         requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
-        defaultPhase = LifecyclePhase.NONE,
+        defaultPhase = LifecyclePhase.TEST,
         threadSafe = true)
 public class ActTestMojo extends ActMojo {
 

@@ -45,6 +45,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+import org.osgl.$;
 import org.osgl.util.S;
 
 import java.io.File;
@@ -92,6 +93,19 @@ public class ActMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         if (skip) {
             getLog().info("Skip flag is on. Will not execute.");
+            return;
+        }
+
+        if (test()) {
+            String mavenTestSkip = System.getProperty("maven.test.skip");
+            if (S.notBlank(mavenTestSkip) && $.bool(mavenTestSkip)) {
+                return;
+            }
+        }
+
+        // make sure we are good when building act-starter-parent project
+        if ("to.be.Overwritten".equals(appEntry) || "ToBeOverwritten".equals(appEntry)) {
+            getLog().info("Missing AppEntry. Will not execute.");
             return;
         }
 

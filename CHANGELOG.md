@@ -1,5 +1,9 @@
 # ACT Maven Plugin
 
+## 1.8.12.0 - 20/Nov/2018
+* Bind `act:test` to maven `test` phase #4
+* Update to act-1.8.12
+
 ## 1.8.8.8 - 30/Oct/2018
 - rename e2e to test
 
