@@ -1,5 +1,8 @@
 # ACT Maven Plugin
 
+## 1.8.26.0
+* Disable JVM remote debugging when run test #5
+
 ## 1.8.12.0 - 20/Nov/2018
 * Bind `act:test` to maven `test` phase #4
 * Update to act-1.8.12

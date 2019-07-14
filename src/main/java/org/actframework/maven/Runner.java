@@ -76,7 +76,7 @@ public class Runner {
         this.mainClass = mainClass;
         this.classpath = classpath;
         this.mavenBaseDir = mavenBaseDir;
-        this.jpdaPort = jpdaPort;
+        this.jpdaPort = test ? 0 : jpdaPort;
         this.jvmArgs = jvmArgs;
         this.test = test;
     }
