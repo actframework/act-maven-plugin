@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2012-2015 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +25,9 @@ package org.actframework.maven;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,6 +51,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
 /**
  * This is a refactored version of
  * RunClassInSeparateJvmMachine.java from the Ninja Web Framework
@@ -70,8 +71,11 @@ public class Runner {
     private final int jpdaPort;
     private final String jvmArgs;
     private final boolean test;
+    private String lombok;
 
-    public Runner(String mainClass, String classpath, File mavenBaseDir, int jpdaPort, String jvmArgs, boolean test) {
+
+
+    public Runner(String mainClass, String classpath, File mavenBaseDir, int jpdaPort, String jvmArgs, boolean test, String lombok) {
         this.outputStream = System.out; //NOSONAR
         this.mainClass = mainClass;
         this.classpath = classpath;
@@ -79,6 +83,7 @@ public class Runner {
         this.jpdaPort = test ? 0 : jpdaPort;
         this.jvmArgs = jvmArgs;
         this.test = test;
+        this.lombok = lombok;
     }
 
     public OutputStream getOutput() {
@@ -133,6 +138,11 @@ public class Runner {
         String javaBin = javaHome + File.separator + "bin" + File.separator + "java";
 
         commandLine.add(javaBin);
+
+        if (lombok != null) {
+            commandLine.add("-javaagent:" + lombok + "=ECJ");
+        }
+
         if (jpdaPort > 0) {
             LOG.info("Listening for jpda connection at " + jpdaPort);
             commandLine.add("-Xdebug");

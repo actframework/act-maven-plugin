@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2012-2015 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +25,9 @@ package org.actframework.maven;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -55,7 +55,7 @@ import java.util.List;
 /**
  * This is a refactored version of
  * NinjaRunMojo.java from the Ninja Web Framework
- *
+ * <p>
  * Original source code can be found here:
  * https://github.com/ninjaframework/ninja/blob/develop/ninja-maven-plugin/src/main/java/ninja/maven/NinjaRunMojo.java
  */
@@ -64,6 +64,9 @@ import java.util.List;
         defaultPhase = LifecyclePhase.NONE,
         threadSafe = true)
 public class ActMojo extends AbstractMojo {
+
+    @Parameter(property = "act.lombok", defaultValue = "${app.lombok}", required = false, readonly = true)
+    protected String lombok;
 
     @Parameter(property = "act.appEntry", defaultValue = "${app.entry}", required = true, readonly = true)
     protected String appEntry;
@@ -128,19 +131,13 @@ public class ActMojo extends AbstractMojo {
 
     protected Runner createRunner(List<String> classpathItems) {
         mergeSystemProperties();
-        return new Runner(
-                appEntry,
-                StringUtils.join(classpathItems, File.pathSeparator),
-                project.getBasedir(),
-                jpdaPort,
-                jvmArgs,
-                test());
+        return new Runner(appEntry, StringUtils.join(classpathItems, File.pathSeparator), project.getBasedir(), jpdaPort, jvmArgs, test(), lombok);
     }
 
     private void mergeSystemProperties() {
         _mergeSysProp("test.run");
         _mergeSysProp("act.test.run");
-        
+
         _mergeSysProp("e2e.run");
         _mergeSysProp("act.e2e.run");
 
