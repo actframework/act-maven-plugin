@@ -1,5 +1,8 @@
 # ACT Maven Plugin
 
+## 1.8.27.0
+* lombok support
+
 ## 1.8.26.0
 * Disable JVM remote debugging when run test #5
 
