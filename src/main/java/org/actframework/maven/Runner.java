@@ -148,9 +148,9 @@ public class Runner {
             commandLine.add("-Xdebug");
             String s = System.getProperty("suspend");
             if ($.bool(s)) {
-                commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=%s", jpdaPort));
+                commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=%s -Djava.awt.headless=true", jpdaPort));
             } else {
-                commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=%s", jpdaPort));
+                commandLine.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=%s -Djava.awt.headless=true", jpdaPort));
             }
         }
 

@@ -1,5 +1,10 @@
 # ACT Maven Plugin
 
+## 1.9.1.0
+
+* Update act maven parent to 1.9.1a
+* Exception when running `run_dev` in a headless environment #7
+
 ## 1.8.27.0
 * lombok support
 
